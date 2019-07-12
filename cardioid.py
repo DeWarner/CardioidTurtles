@@ -26,31 +26,31 @@ def get_coord_of_node(node, mod, radius):
 
 def reset_cursor(coord, heading=None):
     """move the cursor to the provided coordinate without drawing"""
-    up()
-    setposition(*coord)
+    up() # lift pen off canvas
+    setposition(*coord) # move pen
     if heading is not None:
-        setheading(heading)
-    down()
+        setheading(heading) # orient the pen
+    down() # re-engage the pen
 
 
 def main():
     """main program execution"""
-    radius = 200
-    pen(speed=1000, pensize=2)
-    hideturtle()
+    radius = 200 # radius of circle
+    pen(speed=1000, pensize=2) # initialise pen
+    hideturtle() # hide the cursor
     cont = "continue"
     while "q" not in cont:
-        reset_cursor(polar_coord_to_cartesian(0, radius), 90)
-        clear()
-        circle(radius)
-        mod = int(input("Modulo: "))
-        multiplier = int(input("Multiplier: "))
-        for node in range(mod):
+        reset_cursor(polar_coord_to_cartesian(0, radius), 90) # put cursor in start position
+        circle(radius) # draw bounding circle
+        mod = int(input("Modulo: ")) # read from user the number of marks to put around the circle
+        multiplier = num(input("Multiplier: ")) # read the value to be used as a multiplier
+        for node in range(mod): # loop through each mark
             start = get_coord_of_node(node, mod, radius)
             end = get_coord_of_node(node*multiplier, mod, radius)
-            reset_cursor(start)
-            setposition(*end)
-        cont = input("q to quit: ")
+            reset_cursor(start) # put the cursor on the mark
+            setposition(*end) # draw line to the destination
+        cont = input("q to quit: ") # do they want to go again?
+        clear() # clear drawing to make room for the next one
 
 
 if __name__ == '__main__':
