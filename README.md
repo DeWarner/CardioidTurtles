@@ -1,21 +1,21 @@
 # CardioidTurtles
 A quick python script for generating cardioids using turtles.
 
-To get started,
+## Pre-Requisites
+python3 https://www.python.org/downloads/
 
-install the latest python 3, https://www.python.org/downloads/
-
-## with git
-
+git (optional) https://git-scm.com/downloads
+## Getting the Files
+### with git
   `git clone https://github.com/DeWarner/CardioidTurtles.git`
-
-## without git
-
+### without git
   download zip and unpack
-
+## Running the Script
 in your command line, navigate to the directory of the project.
 
-run `python cardioid.py`
+run
+
+`python3 cardioid.py`
 
 split your screen with the canvas and the command line,
 
