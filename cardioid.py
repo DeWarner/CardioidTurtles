@@ -33,13 +33,6 @@ def reset_cursor(coord, heading=None):
     down()
 
 
-def reset_canvas(position, heading):
-    """clear the canvas and redraw the circle"""
-    reset_cursor(position, heading)
-    clear()
-    circle(radius)
-
-
 def main():
     """main program execution"""
     radius = 200
@@ -49,7 +42,9 @@ def main():
     while "q" not in cont:
         mod = int(input("Modulo: "))
         multiplier = int(input("Multiplier: "))
-        reset_canvas(polar_coord_to_cartesian(0, radius), 90)
+        reset_cursor(polar_coord_to_cartesian(0, radius), 90)
+        clear()
+        circle(radius)
         for node in range(mod):
             start = get_coord_of_node(node, mod, radius)
             end = get_coord_of_node(node*multiplier, mod, radius)
