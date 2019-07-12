@@ -43,7 +43,7 @@ def main():
         reset_cursor(polar_coord_to_cartesian(0, radius), 90) # put cursor in start position
         circle(radius) # draw bounding circle
         mod = int(input("Modulo: ")) # read from user the number of marks to put around the circle
-        multiplier = num(input("Multiplier: ")) # read the value to be used as a multiplier
+        multiplier = float(input("Multiplier: ")) # read the value to be used as a multiplier
         for node in range(mod): # loop through each mark
             start = get_coord_of_node(node, mod, radius)
             end = get_coord_of_node(node*multiplier, mod, radius)
