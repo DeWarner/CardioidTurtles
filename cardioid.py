@@ -3,35 +3,45 @@ from turtle import pen, up, down, setposition, setheading, circle, clear, hidetu
 
 
 def polar_coord_to_cartesian(angle, radius):
+    """
+    take a angle and a radius (polar coordinate)
+    return x and y coordinates (cartesian coordinate)
+    """
     x_coord = radius * cos(angle)
     y_coord = radius * sin(angle)
     return (x_coord, y_coord)
 
 
 def get_node_angle(node, mod):
+    """node index to an angle"""
     return (node * 2 * pi) / mod
 
 
 def get_coord_of_node(node, mod, radius):
+    """from a node index, generate the corresponding coordinate"""
     angle = get_node_angle(node, mod)
     coord = polar_coord_to_cartesian(angle, radius)
     return coord
 
 
-def reset_cursor(*coord):
+def reset_cursor(coord, heading=None):
+    """move the cursor to the provided coordinate without drawing"""
     up()
     setposition(*coord)
+    if heading is not None:
+        setheading(heading)
     down()
 
 
-def reset_canvas(radius):
-    reset_cursor(*polar_coord_to_cartesian(0, radius))
-    setheading(90)
+def reset_canvas(position, heading):
+    """clear the canvas and redraw the circle"""
+    reset_cursor(position, heading)
     clear()
     circle(radius)
 
 
 def main():
+    """main program execution"""
     radius = 200
     pen(speed=1000, pensize=2)
     hideturtle()
@@ -39,14 +49,15 @@ def main():
     while "q" not in cont:
         mod = int(input("Modulo: "))
         multiplier = int(input("Multiplier: "))
-        reset_canvas(radius)
+        reset_canvas(polar_coord_to_cartesian(0, radius), 90)
         for node in range(mod):
             start = get_coord_of_node(node, mod, radius)
             end = get_coord_of_node(node*multiplier, mod, radius)
-            reset_cursor(*start)
+            reset_cursor(start)
             setposition(*end)
         cont = input("q to quit: ")
 
 
 if __name__ == '__main__':
     main()
+    
