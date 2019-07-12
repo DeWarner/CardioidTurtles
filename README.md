@@ -7,7 +7,7 @@ python3 https://www.python.org/downloads/
 git (optional) https://git-scm.com/downloads
 ## Getting the Files
 ### with git
-  `git clone https://github.com/DeWarner/CardioidTurtles.git`
+  `git clone https://github.com/DeWarner/ModuloArithmeticTurtles.git`
 ### without git
   download zip and unpack
 ## Running the Script
