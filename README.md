@@ -5,9 +5,12 @@ To get started,
 
 install the latest python 3, https://www.python.org/downloads/
 
-with git:
+## with git
+
   `git clone https://github.com/DeWarner/CardioidTurtles.git`
-without git:
+
+## without git
+
   download zip and unpack
 
 in your command line, navigate to the directory of the project.
