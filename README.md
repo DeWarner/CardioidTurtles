@@ -1,4 +1,4 @@
-# CardioidTurtles
+# ModuloArithemeticTurtles
 A quick python script for generating cardioids using turtles.
 
 ## Pre-Requisites
