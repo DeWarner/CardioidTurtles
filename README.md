@@ -5,9 +5,9 @@ To get started,
 
 install the latest python 3, https://www.python.org/downloads/
 
-git clone or download zip and unzip,
+`git clone https://github.com/DeWarner/CardioidTurtles.git` or download zip and unpack,
 
-go to your command line, navigate to the directory of the project.
+in your command line, navigate to the directory of the project.
 
 run `python cardioid.py`
 
