@@ -1,5 +1,5 @@
 from math import pi, sin, cos
-from turtle import pen, up, down, setposition, setheading, circle, clear
+from turtle import pen, up, down, setposition, setheading, circle, clear, hideturtle
 
 
 def polar_coord_to_cartesian(angle, radius):
@@ -34,6 +34,7 @@ def reset_canvas(radius):
 def main():
     radius = 200
     pen(speed=1000, pensize=2)
+    hideturtle()
     cont = "continue"
     while "q" not in cont:
         mod = int(input("Modulo: "))
