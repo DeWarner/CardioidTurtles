@@ -4,8 +4,8 @@ from turtle import pen, up, down, setposition, setheading, circle, clear
 def get_coord_from_angle(angle, scale):
     return (scale*cos(angle), scale*sin(angle))
 
-def angle_from_point(point, mod):
-    return (2*point*pi/mod)
+def get_node_angle(node, mod):
+    return (2*node*pi/mod)
 
 def main():
     pen(speed=1000, pensize=2)
@@ -20,10 +20,10 @@ def main():
         setposition(get_coord_from_angle(0, scale))
         down()
         circle(scale)
-        for point in range(mod):
+        for node in range(mod):
             up()
-            angle = angle_from_point(point,mod)
-            next_angle = angle_from_point(point*multiplier, mod)
+            angle = get_node_angle(node,mod)
+            next_angle = get_node_angle(node*multiplier, mod)
             start = get_coord_from_angle(angle, scale)
             end = get_coord_from_angle(next_angle, scale)
             setposition(*start)
