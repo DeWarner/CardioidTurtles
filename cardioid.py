@@ -40,11 +40,11 @@ def main():
     hideturtle()
     cont = "continue"
     while "q" not in cont:
-        mod = int(input("Modulo: "))
-        multiplier = int(input("Multiplier: "))
         reset_cursor(polar_coord_to_cartesian(0, radius), 90)
         clear()
         circle(radius)
+        mod = int(input("Modulo: "))
+        multiplier = int(input("Multiplier: "))
         for node in range(mod):
             start = get_coord_of_node(node, mod, radius)
             end = get_coord_of_node(node*multiplier, mod, radius)
