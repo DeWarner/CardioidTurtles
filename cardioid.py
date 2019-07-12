@@ -18,7 +18,7 @@ def get_coord_of_node(node, mod, radius):
     return coord
 
 
-def reset_cursor(coord):
+def reset_cursor(*coord):
     up()
     setposition(*coord)
     down()
