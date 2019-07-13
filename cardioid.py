@@ -1,7 +1,7 @@
 from math import pi, sin, cos
 from turtle import pen, penup, pendown, setposition, setheading, circle, clear, hideturtle
 from contextlib import contextmanager
-
+import sys
 
 def polar_coord_to_cartesian(angle, radius):
     """
@@ -67,5 +67,5 @@ def main(*args):
 
 
 if __name__ == '__main__':
-    main()
+    main(*sys.argv[1:])
     
