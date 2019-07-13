@@ -27,7 +27,7 @@ def get_coord_of_node(node, mod, radius):
 
 @contextmanager
 def draw():
-    """engage the pen, draw something, and put it back down again"""
+    """engage the pen, draw something, and dis-engage the pen when your done"""
     pendown()
     yield
     penup()
@@ -37,7 +37,7 @@ def main():
     """main program execution"""
     radius = 200 # radius of circle
     pen(speed=1000, pensize=2) # initialise pen
-    penup()
+    penup() # disengage the pen
     hideturtle() # hide the cursor
     cont = "continue"
     while "q" not in cont:
