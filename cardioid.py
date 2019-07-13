@@ -33,7 +33,14 @@ def draw():
     penup()
 
 
-def main():
+def read(prompt, args):
+    if args:
+        print(prompt + args[0])
+        return (args[0], args[1:])
+    else:
+        return (input(prompt), args)
+
+def main(*args):
     """main program execution"""
     radius = 200 # radius of circle
     pen(speed=1000, pensize=2) # initialise pen
@@ -45,8 +52,10 @@ def main():
         setheading(90) # put cursor in start position
         with draw():
             circle(radius) # draw bounding circle
-        mod = int(input("Modulo: ")) # read from user the number of marks to put around the circle
-        multiplier = float(input("Multiplier: ")) # read the value to be used as a multiplier
+        mod, args = read("Modulo: ", args) # read from user the number of marks to put around the circle
+        multiplier, args = read("Multiplier: ", args) # read the value to be used as a multiplier
+        mod = int(mod) # explicitly convert mod to an integer, because its probably a string
+        multiplier = float(multiplier) # explicitly convert mod to an floating point number, because its probably a string
         for node in range(mod): # loop through each mark
             start = get_coord_of_node(node, mod, radius)
             end = get_coord_of_node(node*multiplier, mod, radius)
