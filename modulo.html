@@ -1,108 +1,118 @@
 <!DOCTYPE html?
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Cardioid SVG</title>
-</head>
-<body>
-	<svg style="position:fixed;z-index:-1" id="box" width="100%" height="100%">
-	</svg>
-	<form>
-		Modulus: <input id="mod" name="mod" type="integer" required onchange="modChange()">
-		<div style="display:inline;" id="modErr"></div><br/><br/>
-		Multiplier: <input id="k" name="k" type="float" required onchange="kChange()">
-		<div style="display:inline;" id="kErr"></div><br/><br/>
-		<button type="submit" onclick="redraw()">Redraw</button>
-	</form>
-	<script>
-	function polarToCart(angle, radius) {
-		const x = radius * Math.sin(angle);
-		const y = radius * Math.cos(angle);
-		return [x, y];
-	}
-	function getAngle(index, mod) {
-		return (index * 2 * Math.PI) / mod;	
-	}
-	function getCoord(index, mod, radius) {
-		const angle = getAngle(index, mod);
-		return polarToCart(angle, radius);	
-	}
-	function modChange() {
-		let text;
-		// Get the value of the input field with id="numb"
-		console.log("onchenge")
-		field = document.getElementById("mod");
-		// If x is Not a Number or less than one or greater than 10
-		if (field.value === mod) {
-			field.style.color = "grey";
-			text = "";
-		} else if (isNaN(field.value) || field.value%1 != 0) {
-			field.style.color = "red";
-			text = "Invalid Input"
-	        } else {
-			field.style.color = "green";
-			text = "";
-		}
-		document.getElementById("modErr").innerHTML = text;
-	}
-	function kChange() {
-		let text;
-		// Get the value of the input field with id="numb"
-		console.log("onchenge")
-		field = document.getElementById("k");
-		// If x is Not a Number or less than one or greater than 10
-		if (isNaN(field.value) || field.value%1 != 0) {
-			field.style.color = "red";
-			text = "Invalid Input"
-		} else if (field.value === k) {
-			field.style.color = "grey";
-			text = "";
-	        } else {
-			field.style.color = "green";
-			text = "";
-		}
-		document.getElementById("kErr").innerHTML = text;
-	}
-	
-	const urlParams = new URLSearchParams(window.location.search);
-	const k = urlParams.get("k");
-	const mod = urlParams.get("mod");
-	const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-	const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-	const cx = vw * 0.5;
-	const cy = vh * 0.5
-	const radius = vh * 0.4;
-	const SVGNS = "http://www.w3.org/2000/svg"
-	document.getElementById("k").setAttribute("value", k);
-	document.getElementById("mod").setAttribute("value", mod);
-	document.getElementById("mod").style.color = "grey";
-	document.getElementById("k").style.color = "grey";
-	
-	circle = document.createElementNS(SVGNS, "circle");
-	circle.setAttribute("cx", cx);	
-	circle.setAttribute("cy", cy);	
-	circle.setAttribute("r", radius);	
-	circle.setAttribute("fill", "yellow");
-	circle.setAttribute("stroke", "green");	
-	circle.setAttribute("stroke-width", "4");	
-	/*circle cx="50%" cy="50%" r="40vh"
-			stroke="green" stroke-width="4"
-			fill="yellow" />
-	*/
-	document.getElementById("box").appendChild(circle);
-	for (let i = 0; i < mod; i++) {
-		const [x1, y1] = getCoord(i, mod, radius);
-		const [x2, y2] = getCoord(i*k, mod, radius)
-		console.log(i, [x1, y1], [x2, y2])		
-		const line = document.createElementNS(SVGNS, 'line');
-		line.style.stroke = "rgb(255,0,0)";
-		line.style["stroke-width"] = "1";
-		line.setAttribute("x1", x1 + cx);
-		line.setAttribute("y1", y1 + cy);
-		line.setAttribute("x2", x2 + cx);
-		line.setAttribute("y2", y2 + cy);
-		document.getElementById("box").appendChild(line);
-	}
-	</script>
-</body>
+	<head>
+		<meta charset="utf-8">
+		<title>Cardioid SVG</title>
+	</head>
+	<body>
+		<svg style="position:fixed;z-index:-1" id="box" width="100%" height="100%"/>
+		<form>
+			Modulus: <input id="mod" name="mod" type="integer" onfocus="this.value = this.value;" required onkeyup="modChange()">
+			<div style="display:inline;" id="modErr"></div><br/><br/>
+			Multiplier: <input id="k" name="k" type="float" onfocus="this.value = this.value;" required onkeyup="kChange()">
+			<div style="display:inline;" id="kErr"></div><br/><br/>
+			<button type="submit" onclick="redraw()">Redraw</button>
+		</form>
+		<script>
+			const SVGNS = "http://www.w3.org/2000/svg"
+			const urlParams = new URLSearchParams(window.location.search);
+
+			function polarToCart(angle, radius) {
+				const x = radius * Math.sin(angle);
+				const y = radius * Math.cos(angle);
+				return [x, y];
+			}
+
+			function getAngle(index, mod) {
+				return (index * 2 * Math.PI) / mod;
+			}
+
+			function getCoord(index, mod, radius) {
+				const angle = getAngle(index, mod);
+				return polarToCart(angle, radius);
+			}
+
+			function modChange() {
+				console.log("modchenge")
+				field = document.getElementById("mod");
+				if (isNaN(field.value) || field.value >= 10000 || field.value%1 != 0) {
+					field.style.color = "red";
+					document.getElementById("modErr").innerHTML = "Invalid Input";
+			  } else {
+					field.style.color = "black";
+					document.getElementById("modErr").innerHTML = "";
+					redraw(field.value, document.getElementById("k").value);
+				}
+			}
+
+			function kChange() {
+				console.log("kchenge")
+				field = document.getElementById("k");
+				if (isNaN(field.value) || field.value >= 10000 || field.value%1 != 0) {
+					field.style.color = "red";
+					document.getElementById("kErr").innerHTML = "Invalid Input";
+				} else {
+					field.style.color = "black";
+					document.getElementById("kErr").innerHTML = "";
+					redraw(document.getElementById("mod").value, field.value);
+				}
+			}
+
+			const getCircle = (cx, cy, radius) => {
+				circle = document.createElementNS(SVGNS, "circle");
+				circle.setAttribute("cx", cx);
+				circle.setAttribute("cy", cy);
+				circle.setAttribute("r", radius);
+				circle.setAttribute("fill", "yellow");
+				circle.setAttribute("stroke", "green");
+				circle.setAttribute("stroke-width", "4");
+				return circle;
+			}
+
+			const clearElement = (element) => {
+				while (element.hasChildNodes()) {
+					element.removeChild(element.lastChild);
+				}
+			}
+
+			const getLine = ([x1, y1], [x2, y2]) => {
+				const line = document.createElementNS(SVGNS, 'line');
+				line.style.stroke = "rgb(255,0,0)";
+				line.style["stroke-width"] = "1";
+				line.setAttribute("x1", x1);
+				line.setAttribute("y1", y1);
+				line.setAttribute("x2", x2);
+				line.setAttribute("y2", y2);
+				return line;
+			}
+
+			const redraw = (mod, k) => {
+				console.log("redraw");
+				const svg = document.getElementById("box");
+				const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+				const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+				const cx = vw * 0.5;
+				const cy = vh * 0.5
+				const radius = vh * 0.4;
+				clearElement(svg);
+				svg.appendChild(getCircle(cx, cy, radius));
+				for (let i = 0; i < mod; i++) {
+					const [x1, y1] = getCoord(i, mod, radius);
+					const [x2, y2] = getCoord(i*k, mod, radius)
+					svg.appendChild(getLine([x1+cx, y1+cy], [x2+cx, y2+cy]));
+				}
+			}
+
+			const k = urlParams.get("k") || 2;
+			const mod = urlParams.get("mod") || 200;
+			const kIn = document.getElementById("k")
+			const modIn = document.getElementById("mod")
+			kIn.setAttribute("value", k);
+			modIn.focus();
+			modIn.value = mod;
+			kIn.style.color = "grey";
+			modIn.style.color = "grey";
+			redraw(mod, k);
+		</script>
+	</body>
 </html>
