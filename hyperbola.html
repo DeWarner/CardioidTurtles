@@ -1,0 +1,110 @@
+<!DOCTYPE html?
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Cardioid SVG</title>
+	</head>
+	<body>
+		<svg style="position:fixed;z-index:-1;" id="box" width="100%" height="100%"/>
+		<form style="visibility:visible;">
+			<span class="text" style="color:white" >
+				Interval:
+			</span>
+			<input id="k" name="k" type="float"
+				onfocus="this.value = this.value;"
+				required
+				onkeyup="kChange()"
+				width = "1000px"
+			/>
+			<div style="display:inline;" id="kErr"></div>
+			<input type="range" id="kR"
+				min="1" max="100" onchange="kRChange()"
+			/><br/><br/>
+			<button type="submit" onclick="redraw()">
+				Redraw
+			</button>
+		</form>
+		<script>
+			const SVGNS = "http://www.w3.org/2000/svg"
+			const urlParams = new URLSearchParams(window.location.search);
+
+			const theme = {
+				background: "pink",
+				text: "green",
+				diagramBackground: "black",
+				diagramLines: "green",
+			}
+
+			function kRChange() {
+				field = document.getElementById("kR");
+				const kIn = document.getElementById("k")
+				kIn.setAttribute("value", field.value);
+				kChange();
+			}
+
+			function kChange() {
+				console.log("kchenge")
+				field = document.getElementById("k");
+				if (isNaN(field.value) || field.value > 100) {
+					field.style.color = "red";
+					document.getElementById("kErr").innerHTML = "Invalid Input";
+				} else {
+					field.style.color = "black";
+					document.getElementById("kErr").innerHTML = "";
+					redraw(Number(field.value));
+				}
+			}
+
+			const redraw = (k) => {
+				console.log("redraw");
+				const svg = document.getElementById("box");
+				const vh = svg.height.baseVal.value || 700;
+				const vw = svg.width.baseVal.value || 700;
+				const cx = vw * 0.5;
+				const cy = vh * 0.5
+				const radius = Math.min(vh, vw) * 0.4;
+				let square = svg.getElementById("square");
+				if (!square) {
+					square = document.createElementNS(SVGNS, "rect");
+					square.id = "square";
+					svg.appendChild(square);
+					square.setAttribute("fill", theme.diagramBackground);
+				}
+				square.setAttribute("height", 2*radius);
+				square.setAttribute("width", 2*radius);
+				square.setAttribute("x", cx - radius);
+				square.setAttribute("y", cy - radius);
+				const lines = svg.getElementsByTagName("line")
+				while (lines.length > k) {
+					let line = lines[lines.length - 1];
+					svg.removeChild(line);
+				}
+				for (let i = 0; i < k; i++) {
+					let line = lines[i];
+					if (!line) {
+						line = document.createElementNS(SVGNS, 'line');
+						line.style.stroke = theme.diagramLines;
+						line.style["stroke-width"] = "1";
+						svg.appendChild(line);
+					}
+					// 1*2r/2
+					line.setAttribute("x1", cx - radius);
+					line.setAttribute("y1", (i + 1)*2*radius/(k+1) - radius + cy);
+					console.log(i, k, i+1, k+1, (i+1)/(k+1))
+					line.setAttribute("x2", (i + 1)*2*radius/(k+1) - radius + cx);
+					line.setAttribute("y2", radius + cy);
+				}
+			}
+			document.getElementsByTagName("body")[0].style["background-color"] = theme.background;
+			const textElems = document.getElementsByClassName("text");
+			for (let i = 0; i < textElems.length; i++) {
+  			textElems[i].style.color = theme.text;
+			}
+			const k = urlParams.get("k") || 20;
+			const kIn = document.getElementById("k")
+			kIn.setAttribute("value", k);
+			kIn.style.color = "grey";
+			redraw(Number(k));
+		</script>
+	</body>
+</html>
